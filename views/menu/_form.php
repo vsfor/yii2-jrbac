@@ -9,12 +9,12 @@ use yii\widgets\ActiveForm;
 
 if(is_null($model->status)) $model->status = 1;
 if(is_null($model->sortorder)) $model->sortorder = 0;
-$pMenuItems = \admin\modules\jrbac\vendor\JMenu::getInstance()->getOptionList(0,0,1);
+$pMenuItems = \jext\jrbac\vendor\JMenu::getInstance()->getOptionList(0,0,1);
 $pMenuList = ['0'=>'顶级菜单'];
 foreach($pMenuItems as $item) {
     if($item['id'] != $model->id) $pMenuList[$item['id']] = $item['label'];
 }
-$menuLib = \admin\modules\jrbac\vendor\JMenu::getInstance();
+$menuLib = \jext\jrbac\vendor\JMenu::getInstance();
 $iconArray = $menuLib->getMenuIconOptionItems();
 if (!$model->icon) {
     $model->icon = $menuLib->defaultIcon;

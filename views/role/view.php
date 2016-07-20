@@ -24,18 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'name',
                 'label'=>'角色唯一标识',
             ],
-//            'description',
             [
                 'attribute' => 'description',
                 'label' => '描述',
             ],
-//            'createdAt:datetime',
             [
                 'attribute' => 'createdAt',
                 'label' => '创建时间',
                 'value' => ''.date("Y-m-d H:i:s", $item->createdAt),
             ],
-//            'updatedAt:datetime',
             [
                 'attribute' => 'updatedAt',
                 'label' => '更新时间',

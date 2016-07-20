@@ -1,6 +1,8 @@
 <?php
 /** @var $this \yii\web\View */
 
+$asset = jext\jrbac\JrbacAsset::register($this);
+
 if (!function_exists('j_view_show_mask')) {
     function j_view_show_mask() { }
 }
@@ -13,7 +15,7 @@ $this->registerCss('
          }
         #ll-mask-layer span { position:absolute; left:35%; top:35%; color:#fff;
             padding:60px 10px 10px 10px; text-align:center; border-radius:10px;
-            background:#000 url("/static/images/ajax-loader.gif") top center no-repeat;
+            background:#000 url("'.$asset->baseUrl.'/images/ajax-loader.gif") top center no-repeat;
          }
         #ll-mask-layer span b { color:#F404F1; }
     ');

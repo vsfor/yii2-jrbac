@@ -2,13 +2,7 @@
   "name": "jext/yii2-jrbac",
   "description": "JRBAC - Yii2 RBAC admin control panel and dashboard that's based on Bootstrap 3",
   "homepage": "http://blog.jeen.wang/",
-  "keywords": [
-    "yii2",
-    "admin",
-    "rbac",
-    "extension",
-    "module"
-  ],
+  "keywords": ["yii2", "admin", "rbac", "extension", "module"],
   "authors": [
     {
       "name": "Jeen Wang",
@@ -17,6 +11,7 @@
       "role": "Developer"
     }
   ],
+  "type": "yii2-extension",
   "license": "MIT",
   "support": {
     "email": "jeen@vsfor.com",

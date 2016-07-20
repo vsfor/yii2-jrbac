@@ -1,5 +1,5 @@
 <?php
-namespace admin\modules\jrbac\vendor;
+namespace jext\jrbac\vendor;
 use yii\helpers\Html;
 
 class RuleActionColumn extends \yii\grid\ActionColumn

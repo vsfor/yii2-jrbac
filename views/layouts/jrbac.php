@@ -3,14 +3,14 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use admin\assets\AppAsset;
+use jext\jrbac\JrbacAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 
-AppAsset::register($this);
+JrbacAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -28,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Yii2 JRBAC',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -74,13 +74,13 @@ AppAsset::register($this);
 
 <?php
 if (!function_exists('j_view_show_mask')) {
-    echo $this->render('/mask.php');
+    echo $this->render('mask.php');
 }
 ?>
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Jeen Wang <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

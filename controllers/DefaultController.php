@@ -1,11 +1,11 @@
 <?php
 
-namespace admin\modules\jrbac\controllers;
+namespace jext\jrbac\controllers;
   
 
 /**
  * Class DefaultController
- * @package admin\modules\jrbac\controllers
+ * @package jext\jrbac\controllers
  */
 class DefaultController extends ControllerJrbac
 {

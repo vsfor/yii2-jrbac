@@ -1,16 +1,15 @@
 <?php
 
-namespace admin\modules\jrbac\controllers;
-
-use admin\controllers\ControllerBase;
-use admin\modules\jrbac\vendor\RoleForm;
+namespace jext\jrbac\controllers;
+ 
+use jext\jrbac\vendor\RoleForm;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 
 /**
  * 角色管理
  * Class RoleController
- * @package admin\modules\jrbac\controllers
+ * @package jext\jrbac\controllers
  */
 class RoleController extends ControllerJrbac
 {

@@ -1,8 +1,7 @@
 <?php
 
-namespace admin\modules\jrbac\controllers;
+namespace jext\jrbac\controllers;
 
-use admin\controllers\ControllerBase;
 use common\core\Jeen;
 use Yii;
 use common\models\User;

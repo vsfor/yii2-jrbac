@@ -1,14 +1,14 @@
 <?php
 
-namespace admin\modules\jrbac\controllers;
+namespace jext\jrbac\controllers;
 
-use admin\controllers\ControllerBase;
+use yii\web\Controller;
 
 /**
  * Class ControllerJrbac
- * @package admin\modules\jrbac\controllers
+ * @package jext\jrbac\controllers
  */
-class ControllerJrbac extends ControllerBase
+class ControllerJrbac extends Controller
 {
-    public $layout = 'jrbac.php';
+    public $layout = 'jrbac';
 }

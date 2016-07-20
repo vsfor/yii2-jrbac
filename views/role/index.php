@@ -18,27 +18,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn','multiple'=>true],
-            ['class' => 'yii\grid\SerialColumn'],
-//            'type',
-//            'name',
+            ['class' => 'yii\grid\SerialColumn'], 
             [
                 'attribute'=>'name',
                 'header'=>'角色唯一标识',
-            ],
-//            'description',
+            ], 
             [
                 'attribute' => 'description',
                 'header' => '描述',
-            ],
-//            'createdAt:datetime',
+            ], 
             [
                 'attribute' => 'createdAt',
                 'header' => '创建时间',
                 'value' => function($model) {
                     return date("Y-m-d H:i",$model->createdAt);
                 }
-            ],
-//            'updatedAt:datetime',
+            ], 
             [
                 'attribute' => 'updatedAt',
                 'header' => '更新时间',

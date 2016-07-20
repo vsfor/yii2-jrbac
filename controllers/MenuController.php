@@ -1,6 +1,6 @@
 <?php
 
-namespace admin\modules\jrbac\controllers;
+namespace jext\jrbac\controllers;
 
 use Yii;
 use common\models\AdminMenu as Menu;

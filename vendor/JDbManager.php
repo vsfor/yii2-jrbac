@@ -1,5 +1,5 @@
 <?php
-namespace admin\modules\jrbac\vendor;
+namespace jext\jrbac\vendor;
 
 use yii\db\Query;
 use yii\helpers\ArrayHelper;

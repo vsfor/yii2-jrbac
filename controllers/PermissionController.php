@@ -1,9 +1,9 @@
 <?php
 
-namespace admin\modules\jrbac\controllers;
+namespace jext\jrbac\controllers;
 
-use admin\modules\jrbac\vendor\JAction;
-use admin\modules\jrbac\vendor\PermissionForm;
+use jext\jrbac\vendor\JAction;
+use jext\jrbac\vendor\PermissionForm;
 use common\core\Jeen;
 use yii\base\Module;
 use yii\data\ArrayDataProvider;

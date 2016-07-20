@@ -1,5 +1,5 @@
 <?php
-namespace admin\modules\jrbac\rules;
+namespace jext\jrbac\rules;
  
 use yii\rbac\Rule;
 

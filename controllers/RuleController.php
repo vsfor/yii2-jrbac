@@ -1,9 +1,8 @@
 <?php
 
-namespace admin\modules\jrbac\controllers;
+namespace jext\jrbac\controllers;
 
-use admin\controllers\ControllerBase;
-use admin\modules\jrbac\vendor\RuleForm;
+use jext\jrbac\vendor\RuleForm;
 use common\core\Jeen;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
@@ -11,7 +10,7 @@ use yii\data\ArrayDataProvider;
 /**
  * 规则管理
  * Class RuleController
- * @package admin\modules\jrbac\controllers
+ * @package jext\jrbac\controllers
  */
 class RuleController extends ControllerJrbac
 {
