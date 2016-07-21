@@ -3,8 +3,8 @@
 namespace jext\jrbac\controllers;
 
 use Yii;
-use common\models\AdminMenu as Menu;
-use common\modelssearch\AdminMenuSearch as MenuSearch;
+use jext\jrbac\models\AdminMenu as Menu;
+use jext\jrbac\models\AdminMenuSearch as MenuSearch;
 use yii\web\NotFoundHttpException;
 
 /** 菜单管理

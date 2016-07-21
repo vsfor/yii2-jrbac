@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\modelssearch\MenuSearch */
+/* @var $searchModel jext\jrbac\models\AdminMenuSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Menus';
@@ -24,16 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-//            'id',
-//            'pid',
             [
                 'attribute' => 'pid',
-                'filter' => \admin\modules\jrbac\vendor\JMenu::getInstance()->getPidFilter(),
+                'filter' => \jext\jrbac\vendor\JMenu::getInstance()->getPidFilter(),
                 'value' => function($model) {
                     $mDes = '';
                     if($model->pid) {
-                        $p = \common\models\AdminMenu::findOne($model->pid);
+                        $p = \jext\jrbac\models\AdminMenu::findOne($model->pid);
                     } else {
                         $p = false;
                     }
@@ -45,17 +42,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'label',
                 'format' => 'raw',
                 'value' => function($model) {
-                    $prefix = \admin\modules\jrbac\vendor\JMenu::getInstance()->iconPrefix;
+                    $prefix = \jext\jrbac\vendor\JMenu::getInstance()->iconPrefix;
                     $t = '<i class="'.$prefix.$model->icon.'">&nbsp;</i>';
                     return $t . $model->label;
                 }
             ],
             'url',
             'sortorder',
-            // 'content',
-            // 'status',
-            // 'ctime:datetime',
-            // 'utime:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

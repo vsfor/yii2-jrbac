@@ -2,10 +2,9 @@
 
 namespace jext\jrbac\controllers;
 
-use common\core\Jeen;
 use Yii;
 use common\models\User;
-use common\modelssearch\UserSearch;
+use jext\jrbac\models\UserSearch;
 use yii\web\NotFoundHttpException;
 
 /** 管理员用户管理
@@ -51,9 +50,7 @@ class UserController extends ControllerJrbac
             $model->generatePasswordResetToken();
             if($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                Jeen::echoln($model->getErrors());exit();
-            }
+            } 
         }
         return $this->render('create', [
             'model' => $model,

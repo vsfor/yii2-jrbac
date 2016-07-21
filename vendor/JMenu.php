@@ -1,7 +1,7 @@
 <?php
 namespace jext\jrbac\vendor;
 
-use \common\models\AdminMenu as Menu;
+use jext\jrbac\models\AdminMenu as Menu;
 
 class JMenu
 {
@@ -86,7 +86,7 @@ class JMenu
 
     public function getPidFilter($pid = 0,$level = 0)
     {
-        $pMenuItems = $this->getOptionList($pid,$level);
+        $pMenuItems = $this->getOptionList($pid,$level,1);
         $pMenuList = [];
         foreach($pMenuItems as $item) {
             $pMenuList[$item['id']] = $item['label'];

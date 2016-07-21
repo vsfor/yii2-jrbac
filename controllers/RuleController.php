@@ -4,7 +4,6 @@ namespace jext\jrbac\controllers;
 
 use jext\jrbac\vendor\RuleForm;
 use common\core\Jeen;
-use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 
 /**
@@ -47,7 +46,7 @@ class RuleController extends ControllerJrbac
                     $model->addError('className', '保存失败');
                 }
             } else {
-                $model->addError('className', '没有找到这个类');
+                $model->addError('className', '没有找到类:'.$className);
             }
         }
         return $this->render('create',[
@@ -91,6 +90,7 @@ class RuleController extends ControllerJrbac
             }
 
         }
+
         $model->name = $name;
         $model->className = $item::className();
         return $this->render('update',[

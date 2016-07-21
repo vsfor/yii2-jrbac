@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $model->loadDefaultValues();
+    $model->status = $model::STATUS_LOCKED;
     echo $this->render('_form', [
         'model' => $model,
     ]) ?>

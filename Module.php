@@ -10,7 +10,6 @@ class Module extends \yii\base\Module
     {
         parent::init();
 
-        \Yii::setAlias('@jext/jrbac', dirname(__FILE__));
         // custom initialization code goes here
     }
 }

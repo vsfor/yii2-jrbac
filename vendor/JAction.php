@@ -77,10 +77,13 @@ class JAction
             substr($cArray[2],0, (strlen($cArray[2]) - 10));
             $cName = Inflector::camel2id(substr($cArray[2],0, (strlen($cArray[2]) - 10)));
             return "/$cName/";
+        } else if ($cCount == 4) {
+            $cName = Inflector::camel2id(substr($cArray[3],0, (strlen($cArray[3]) - 10)));
+            return "/{$cArray[1]}/$cName/";
         } else if ($cCount == 5) {
             $cName = Inflector::camel2id(substr($cArray[4],0, (strlen($cArray[4]) - 10)));
             return "/{$cArray[2]}/$cName/";
-        } else {
+        } else { 
             throw new \Exception("Admin Action Controller Class Name Error");
         }
     }

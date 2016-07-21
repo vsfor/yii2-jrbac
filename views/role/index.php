@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'header' => '操作',
-                'class' => 'admin\modules\jrbac\vendor\RoleActionColumn',
+                'class' => 'jext\jrbac\vendor\RoleActionColumn',
 //                'template' => '{view} {update} {delete}'
             ],
         ],
