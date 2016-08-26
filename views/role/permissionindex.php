@@ -32,19 +32,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header' => '描述',
             ],
             [
-                'attribute' => 'createdAt',
-                'header' => '创建时间',
+                'attribute' => 'ruleName',
+                'header' => '关联规则',
                 'value' => function($model) {
-                    return date("Y-m-d H:i",$model->createdAt);
+                    return $model->ruleName ? : '-';
                 }
             ],
-            [
-                'attribute' => 'updatedAt',
-                'header' => '更新时间',
-                'value' => function($model) {
-                    return date("Y-m-d H:i",$model->updatedAt);
-                }
-            ],
+//            [
+//                'attribute' => 'createdAt',
+//                'header' => '创建时间',
+//                'value' => function($model) {
+//                    return date("Y-m-d H:i",$model->createdAt);
+//                }
+//            ],
+//            [
+//                'attribute' => 'updatedAt',
+//                'header' => '更新时间',
+//                'value' => function($model) {
+//                    return date("Y-m-d H:i",$model->updatedAt);
+//                }
+//            ],
 
         ],
     ]); ?>

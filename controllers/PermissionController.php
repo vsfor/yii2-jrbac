@@ -189,7 +189,7 @@ class PermissionController extends ControllerJrbac
             }
             $permissions = [];
             if ($moduleControllerList) {
-                $permissions = JAction::getInstance()->getPremissionList($moduleControllerList, false);
+                $permissions = JAction::getInstance()->getPermissionList($moduleControllerList, false);
             }
             $permissionList = ArrayHelper::merge($permissionList, $permissions);
             //默认模块控制器权限列表 -- End
@@ -215,7 +215,7 @@ class PermissionController extends ControllerJrbac
                 }
                 $permissions = [];
                 if ($moduleControllerList) {
-                    $permissions = JAction::getInstance()->getPremissionList($moduleControllerList, false);
+                    $permissions = JAction::getInstance()->getPermissionList($moduleControllerList, false);
                 }
                 $permissionList = ArrayHelper::merge($permissionList, $permissions);
             }

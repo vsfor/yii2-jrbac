@@ -3,7 +3,6 @@
 namespace jext\jrbac\controllers;
 
 use jext\jrbac\vendor\RuleForm;
-use common\core\Jeen;
 use yii\data\ArrayDataProvider;
 
 /**

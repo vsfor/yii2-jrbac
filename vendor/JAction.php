@@ -15,10 +15,10 @@ class JAction
 
     public $controllerList = [];
 
-    public function getPremissionList($controllers=[],$withAsterisk=true)
+    public function getPermissionList($controllers=[],$withAsterisk=true)
     {
         $controllerList = $controllers ? : $this->controllerList;
-        $premissions = [];
+        $permissions = [];
         foreach ($controllerList as $controllerName) {
             if (!StringHelper::endsWith($controllerName,'Controller')) {
                 continue;
@@ -26,7 +26,7 @@ class JAction
             $pathPrefix = $this->getPremissionPrefix($controllerName);
             $controllerReflect = new \ReflectionClass($controllerName);
             if ($withAsterisk) {
-                $premissions[] = [
+                $permissions[] = [
                     'path' => $pathPrefix . '*',
                     'description' => $this->handleActionComment($controllerReflect->getDocComment())
                 ];
@@ -42,13 +42,23 @@ class JAction
                     continue;
                 }
                 $actionName = Inflector::camel2id(substr($methodName,6));
-                $premissions[] = [
-                    'path' => $pathPrefix . $actionName,
-                    'description' => $this->handleActionComment($method->getDocComment())
-                ];
+                if ($actionName == 's') {
+                    $diyActions = \Yii::createObject($methodClassName, ['','',[]])->$methodName();
+                    foreach ($diyActions as $diyActionName=>$diyAction) {
+                        $permissions[] = [
+                            'path' => $pathPrefix . $diyActionName,
+                            'description' => isset($diyAction['class']) ? $diyAction['class'] : $methodClassName.'|'.$methodName.'|'.$diyActionName,
+                        ];
+                    }
+                } else {
+                    $permissions[] = [
+                        'path' => $pathPrefix . $actionName,
+                        'description' => $this->handleActionComment($method->getDocComment())
+                    ];
+                }
             }
         }
-        return $premissions;
+        return $permissions;
     }
 
     private function handleActionComment($comment)
@@ -87,6 +97,5 @@ class JAction
             throw new \Exception("Admin Action Controller Class Name Error");
         }
     }
-
-
+    
 }

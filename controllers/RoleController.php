@@ -190,4 +190,43 @@ class RoleController extends ControllerJrbac
         return $this->redirect(['index']);
     }
 
+    public function actionSubindex($id)
+    {
+        $auth = \Yii::$app->getAuthManager();
+        $role = $auth->getRole($id);
+        $allItems = $auth->getRoles();
+        $subItems = $auth->getChildren($id);
+        $dataProvider = new ArrayDataProvider();
+        $dataProvider->setModels($allItems);
+        return $this->render('subindex',[
+            'dataProvider' => $dataProvider,
+            'allItems' => $allItems,
+            'subItems' => $subItems,
+            'role' => $role
+        ]);
+    }
+
+    public function actionSetsub($name)
+    {
+        if (\Yii::$app->getRequest()->getIsPost() && isset($_POST['act'],$_POST['val'])) {
+            $auth = \Yii::$app->getAuthManager();
+            $role = $auth->getRole($name);
+            $permission = $auth->getRole($_POST['val']);
+            try {
+                $flag = true;
+                if($_POST['act'] == 'add') {
+                    if(!$auth->addChild($role,$permission)) $flag = false;
+                } else if($_POST['act'] == 'del') {
+                    if(!$auth->removeChild($role,$permission)) $flag = false;
+                } else {
+                    $flag = false;
+                }
+                return $flag ? 1 : 0;
+            } catch(\Exception $e) {
+                return 0;
+            }
+        }
+        return $this->redirect(['index']);
+    }
+    
 }

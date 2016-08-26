@@ -30,20 +30,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model::className();
                 }
             ],
-            [
-                'attribute' => 'createdAt',
-                'header' => '创建时间',
-                'value' => function($model) {
-                    return date("Y-m-d H:i",$model->createdAt);
-                }
-            ],
-            [
-                'attribute' => 'updatedAt',
-                'header' => '更新时间',
-                'value' => function($model) {
-                    return date("Y-m-d H:i",$model->updatedAt);
-                }
-            ],
+//            [
+//                'attribute' => 'createdAt',
+//                'header' => '创建时间',
+//                'value' => function($model) {
+//                    return date("Y-m-d H:i",$model->createdAt);
+//                }
+//            ],
+//            [
+//                'attribute' => 'updatedAt',
+//                'header' => '更新时间',
+//                'value' => function($model) {
+//                    return date("Y-m-d H:i",$model->updatedAt);
+//                }
+//            ],
 
             [
                 'header' => '操作',
