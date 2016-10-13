@@ -7,16 +7,15 @@ use yii\grid\GridView;
 /* @var $searchModel jext\jrbac\models\JrbacMenuSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Menus';
+$this->title = '菜单列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="menu-index">
 
     <h3><?php echo Html::encode($this->title) ?></h3>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?php echo Html::a('添加 Menu', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php echo Html::a('添加菜单', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php echo GridView::widget([

@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model \jext\jrbac\models\JrbacMenu */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Menus', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '菜单列表', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="menu-view">
