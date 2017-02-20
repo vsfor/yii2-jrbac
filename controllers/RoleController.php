@@ -190,6 +190,7 @@ class RoleController extends ControllerJrbac
         return $this->redirect(['index']);
     }
 
+    /** 子角色列表 */
     public function actionSubindex($id)
     {
         $auth = \Yii::$app->getAuthManager();
@@ -206,6 +207,7 @@ class RoleController extends ControllerJrbac
         ]);
     }
 
+    /** 子角色关联设置 */
     public function actionSetsub($name)
     {
         if (\Yii::$app->getRequest()->getIsPost() && isset($_POST['act'],$_POST['val'])) {
