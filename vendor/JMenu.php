@@ -51,17 +51,17 @@ class JMenu
                 $sub = $this->getItems($item['id']);
                 if($sub) {
                     $list[$k]['items'] = $sub;
-                } else if(in_array($item['url'],['/','#'])) {
+                } else if(in_array($item['url'],['/','#','javascript:;'])) {
                     unset($list[$k]);
                 }
             } else if($this->checkAllow($item['url'])) {
                 $list[$k]['label'] = $item['label'];
-                $list[$k]['url'] = [$item['url']];
+                $list[$k]['url'] = in_array($item['url'],['/','#','javascript:;']) ? $item['url'] : [$item['url']];
                 $list[$k]['icon'] = $this->iconPrefix.(isset($item['icon']) && $item['icon'] ? $item['icon'] : $this->defaultIcon);
                 $sub = $this->getItems($item['id']);
                 if($sub) {
                     $list[$k]['items'] = $sub;
-                } else if(in_array($item['url'],['/','#'])) {
+                } else if(in_array($item['url'],['/','#','javascript:;'])) {
                     unset($list[$k]);
                 }
             }
@@ -107,8 +107,6 @@ class JMenu
 
     public function checkAllow($url)
     {
-        return true;
-
         return \Yii::$app->getAuthManager()->allow($url, ['check_by_menu' => 'jrbac']);
     }
 
