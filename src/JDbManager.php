@@ -1,5 +1,5 @@
 <?php
-namespace jext\jrbac\vendor;
+namespace jext\jrbac\src;
 
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
@@ -18,6 +18,13 @@ use yii\rbac\Item;
  */
 class JDbManager extends DbManager implements JManagerInterface
 {
+    public $itemTable = '{{%jrbac_item}}';
+    public $itemChildTable = '{{%jrbac_item_child}}';
+    public $assignmentTable = '{{%jrbac_assignment}}';
+    public $ruleTable = '{{%jrbac_rule}}';
+    public $menuTable = '{{%jrbac_menu}}';
+    public $docDesAttr = 'jrbac'; //类|方法 文档属性  eg： /** @jrbac 权限名称 */
+
     public function isRoot()
     {
         if(\Yii::$app->getUser()->getIsGuest()) return false;
@@ -26,7 +33,7 @@ class JDbManager extends DbManager implements JManagerInterface
         $auth = \Yii::$app->getAuthManager();
         $roles = $auth->getRolesByUser($user->getId());
         $roleNames = ArrayHelper::getColumn($roles,'name',false);
-        return in_array('root',$roleNames);
+        return in_array('root', $roleNames);
     }
 
     public function getUserQuery()
@@ -94,7 +101,9 @@ class JDbManager extends DbManager implements JManagerInterface
     
     public function allow($permission, $params=[])
     {
-        if($this->isRoot()) return true;
+        if($this->isRoot() || in_array($permission, ['#','/','javascript:;'])) {
+            return true;
+        }
         $urlArr = explode('/',$permission);
         $user = \Yii::$app->getUser();
         if (count($urlArr) == 4) {
@@ -113,4 +122,12 @@ class JDbManager extends DbManager implements JManagerInterface
         return $user->can($permission, $params);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function checkAccess($userId, $permissionName, $params = [])
+    {
+        if ($this->isRoot()) return true;
+        return parent::checkAccess($userId, $permissionName, $params);
+    }
 }

@@ -3,6 +3,9 @@
  * @var $this yii\web\View
  * @var $role yii\rbac\Role
  */
+
+use jext\jrbac\src\RoleActionColumn;
+
 $this->title = '角色列表管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -18,34 +21,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn','multiple'=>true],
-            ['class' => 'yii\grid\SerialColumn'], 
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'options' => ['class' => 'hidden-xs',],
+                'headerOptions' => ['class' => 'hidden-xs',],
+                'filterOptions' => ['class' => 'hidden-xs',],
+                'contentOptions' => ['class' => 'hidden-xs',],
+            ],
             [
                 'attribute'=>'name',
-                'header'=>'角色唯一标识',
+                'header'=>'角色',
             ], 
             [
                 'attribute' => 'description',
                 'header' => '描述',
-            ], 
-//            [
-//                'attribute' => 'createdAt',
-//                'header' => '创建时间',
-//                'value' => function($model) {
-//                    return date("Y-m-d H:i",$model->createdAt);
-//                }
-//            ],
-//            [
-//                'attribute' => 'updatedAt',
-//                'header' => '更新时间',
-//                'value' => function($model) {
-//                    return date("Y-m-d H:i",$model->updatedAt);
-//                }
-//            ],
-
+            ],
             [
                 'header' => '操作',
-                'class' => 'jext\jrbac\vendor\RoleActionColumn',
-//                'template' => '{view} {update} {delete}'
+                'class' => RoleActionColumn::class,
             ],
         ],
     ]); ?>

@@ -1,5 +1,5 @@
 <?php
-namespace jext\jrbac\vendor;
+namespace jext\jrbac\src;
 
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
@@ -13,22 +13,27 @@ class JAction
         return self::$instance;
     }
 
+    private $docDesAttr;
     public $controllerList = [];
 
     public function getPermissionList($controllers=[],$withAsterisk=true)
     {
+        /** @var JDbManager $am */
+        $am = \Yii::$app->getAuthManager();
+        $this->docDesAttr = $am->docDesAttr;
+
         $controllerList = $controllers ? : $this->controllerList;
         $permissions = [];
         foreach ($controllerList as $controllerName) {
             if (!StringHelper::endsWith($controllerName,'Controller')) {
                 continue;
             }
-            $pathPrefix = $this->getPremissionPrefix($controllerName);
+            $pathPrefix = $this->getPermissionPrefix($controllerName);
             $controllerReflect = new \ReflectionClass($controllerName);
             if ($withAsterisk) {
                 $permissions[] = [
                     'path' => $pathPrefix . '*',
-                    'description' => $this->handleActionComment($controllerReflect->getDocComment())
+                    'description' => $this->getActionClassPermissionDescription($controllerName),
                 ];
             }
             $controllerMethods = $controllerReflect->getMethods(\ReflectionMethod::IS_PUBLIC);
@@ -47,13 +52,13 @@ class JAction
                     foreach ($diyActions as $diyActionName=>$diyAction) {
                         $permissions[] = [
                             'path' => $pathPrefix . $diyActionName,
-                            'description' => isset($diyAction['class']) ? $diyAction['class'] : $methodClassName.'|'.$methodName.'|'.$diyActionName,
+                            'description' => isset($diyAction['class']) ? $this->getActionClassPermissionDescription($diyAction['class']) : $methodClassName.'|'.$methodName.'|'.$diyActionName,
                         ];
                     }
                 } else {
                     $permissions[] = [
                         'path' => $pathPrefix . $actionName,
-                        'description' => $this->handleActionComment($method->getDocComment())
+                        'description' => $this->handleActionComment($method->getDocComment()) ? : ($pathPrefix . $actionName),
                     ];
                 }
             }
@@ -61,25 +66,30 @@ class JAction
         return $permissions;
     }
 
+    private function getActionClassPermissionDescription($actionClass)
+    {
+        $ref = new \ReflectionClass($actionClass);
+        $des = $this->handleActionComment($ref->getDocComment());
+        return $des ? : $actionClass;
+    }
+
     private function handleActionComment($comment)
     {
         if (!$comment) {
             return '';
         } else {
-            $cArray = explode('*',$comment);
-            if (count($cArray) < 4) {
-                return '';
-            } else if (trim($cArray[2])) {
-                return trim($cArray[2]);
-            } else if (trim($cArray[3])) {
-                return trim($cArray[3]);
-            } else {
-                return '';
+            $attrs = (new DocParser())->parse($comment);
+            if (isset($attrs[$this->docDesAttr])) {
+                return $attrs[$this->docDesAttr];
             }
+            if (isset($attrs['description'])) {
+                return $attrs['description'];
+            }
+            return '';
         }
     }
 
-    private function getPremissionPrefix($controllerClassName)
+    private function getPermissionPrefix($controllerClassName)
     {
         $cArray = explode('\\', $controllerClassName);
         $cCount = count($cArray);
@@ -93,8 +103,11 @@ class JAction
         } else if ($cCount == 5) {
             $cName = Inflector::camel2id(substr($cArray[4],0, (strlen($cArray[4]) - 10)));
             return "/{$cArray[2]}/$cName/";
-        } else { 
-            throw new \Exception("Admin Action Controller Class Name Error");
+        } else if ($cCount == 6) {
+            $cName = Inflector::camel2id(substr($cArray[5],0, (strlen($cArray[5]) - 10)));
+            return "/{$cArray[2]}/$cName/";
+        } else {
+            throw new \Exception("Action Controller Class Name Parse Error");
         }
     }
     

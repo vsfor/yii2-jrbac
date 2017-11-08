@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model \jext\jrbac\models\JrbacMenu */
+/* @var $model \jext\jrbac\src\JrbacMenu */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => '菜单列表', 'url' => ['index']];
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'pid',
             'label',
             'url:url',
-            'sortorder',
+            'sort_order',
             'content',
             'status',
         ],

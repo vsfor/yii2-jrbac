@@ -1,8 +1,7 @@
 <?php
-
 namespace jext\jrbac\controllers;
 
-use jext\jrbac\vendor\RuleForm;
+use jext\jrbac\src\RuleForm;
 use yii\data\ArrayDataProvider;
 
 /**

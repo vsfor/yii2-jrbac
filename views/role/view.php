@@ -16,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-    <p>基础信息</p>
     <?php echo \yii\widgets\DetailView::widget([
         'model' => $item,
         'attributes' => [
@@ -40,6 +39,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]) ?>
-    <p>权限列表</p>
 
 </div>

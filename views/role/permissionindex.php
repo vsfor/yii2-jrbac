@@ -6,13 +6,14 @@
 $this->title = '角色:'. $role->name.' 权限管理';
 $this->params['breadcrumbs'][] = ['label' => '角色列表', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$itemsArr = \yii\helpers\ArrayHelper::getColumn($roleItems,'name');
+$ownArr = \yii\helpers\ArrayHelper::getColumn($ownItems, 'name');
 ?>
 <div class="role-index">
     <h3><?php echo $this->title; ?></h3>
 
     <p>
         <?php echo \yii\helpers\Html::a('返回', ['index'], ['class' => 'btn btn-success']) ?>
-        <?php //echo \yii\helpers\Html::a('提交', ['setpermission','name'=>$role->name], ['class' => 'btn btn-success','id'=>'batchSet']) ?>
     </p>
 
     <?php echo \yii\grid\GridView::widget([
@@ -22,10 +23,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\CheckboxColumn',
                 'multiple'=>false,
                 'header' => '授予',
+                'checkboxOptions' => function ($model, $key, $index, $column) use($itemsArr, $ownArr) {
+                    $checked = in_array($model->name, $itemsArr);
+                    $owned = in_array($model->name, $ownArr);
+                    return [
+                        'value' => $model->name,
+                        'checked' => $checked,
+                        'disabled' => $checked && !$owned,
+                    ];
+                },
             ],
             [
                 'attribute'=>'name',
                 'header'=>'资源唯一标识',
+                'options' => ['class' => 'hidden-xs',],
+                'headerOptions' => ['class' => 'hidden-xs',],
+                'filterOptions' => ['class' => 'hidden-xs',],
+                'contentOptions' => ['class' => 'hidden-xs',],
             ],
             [
                 'attribute' => 'description',
@@ -36,40 +50,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header' => '关联规则',
                 'value' => function($model) {
                     return $model->ruleName ? : '-';
-                }
+                },
+                'options' => ['class' => 'hidden-xs',],
+                'headerOptions' => ['class' => 'hidden-xs',],
+                'filterOptions' => ['class' => 'hidden-xs',],
+                'contentOptions' => ['class' => 'hidden-xs',],
             ],
-//            [
-//                'attribute' => 'createdAt',
-//                'header' => '创建时间',
-//                'value' => function($model) {
-//                    return date("Y-m-d H:i",$model->createdAt);
-//                }
-//            ],
-//            [
-//                'attribute' => 'updatedAt',
-//                'header' => '更新时间',
-//                'value' => function($model) {
-//                    return date("Y-m-d H:i",$model->updatedAt);
-//                }
-//            ],
-
         ],
     ]); ?>
 
 </div>
 <?php
-$itemsArr = \yii\helpers\ArrayHelper::getColumn($roleItems,'name');
-$itemsStr = implode('","',$itemsArr);
-$this->registerJs('$(function(){
-    var roleItems = ["'.$itemsStr.'"];
-
-    $("input[name=\"selection[]\"]").each(function(i,obj){
-        if($.inArray(obj.value,roleItems) !== -1) {
-            obj.checked = true;
-        }
-    });
-
-
+$this->registerJs('
 
     $("input[name=\"selection[]\"]").change(function(){
         showMask();
@@ -100,31 +92,5 @@ $this->registerJs('$(function(){
         hideMask();
     });
 
-
-//    $("#batchSet").click(function(){
-//        showMask();
-//        var selectedNames = [];
-//        $("input[name=\"selection[]\"]").each(function(i,obj){
-//            if(obj.checked) {
-//                selectedNames.push(obj.value);
-//            }
-//        });
-//        if(selectedNames.length === 0) selectedNames=["清空所有权限"];
-//        if(confirm("确认提交:"+selectedNames.toString()+" ?")) {
-//            $.ajax({
-//                url:this.href,
-//                type:"post",
-//                data:{names:selectedNames},
-//                success:function(data) {
-//                    hideMask();
-//                    if(data === "1") $().toastmessage("showSuccessToast","保存成功");
-//                    else $().toastmessage("showErrorToast","操作失败，请刷新页面重试");
-//                }
-//            });
-//        }
-//        hideMask();
-//        return false;
-//    });
-
-});');
+');
 ?>

@@ -1,13 +1,9 @@
 <?php
+namespace jext\jrbac\src;
 
-namespace jext\jrbac\models;
-
-use Yii;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use jext\jrbac\models\JrbacMenu as Menu;
  
-class JrbacMenuSearch extends Menu
+class JrbacMenuSearch extends JrbacMenu
 {
     /**
      * @inheritdoc
@@ -15,18 +11,9 @@ class JrbacMenuSearch extends Menu
     public function rules()
     {
         return [
-            [['id', 'pid', 'sortorder', 'status'], 'integer'],
+            [['id', 'pid', 'sort_order', 'status'], 'integer'],
             [['label', 'url', 'content'], 'safe'],
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
     }
 
     /**
@@ -38,7 +25,7 @@ class JrbacMenuSearch extends Menu
      */
     public function search($params)
     {
-        $query = Menu::find();
+        $query = static::find();
 
         // add conditions that should always apply here
 
@@ -58,7 +45,7 @@ class JrbacMenuSearch extends Menu
         $query->andFilterWhere([
             'id' => $this->id,
             'pid' => $this->pid,
-            'sortorder' => $this->sortorder,
+            'sort_order' => $this->sort_order,
             'status' => $this->status,
         ]);
 

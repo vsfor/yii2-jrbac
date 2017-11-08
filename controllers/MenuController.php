@@ -1,10 +1,9 @@
 <?php
-
 namespace jext\jrbac\controllers;
 
 use Yii;
-use jext\jrbac\models\JrbacMenu as Menu;
-use jext\jrbac\models\JrbacMenuSearch as MenuSearch;
+use jext\jrbac\src\JrbacMenu as Menu;
+use jext\jrbac\src\JrbacMenuSearch as MenuSearch;
 use yii\web\NotFoundHttpException;
 
 /** 菜单管理

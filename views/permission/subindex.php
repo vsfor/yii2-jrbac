@@ -1,10 +1,10 @@
 <?php
 /**
  * @var $this yii\web\View
- * @var $role yii\rbac\Role
+ * @var $permission yii\rbac\Permission
  */
-$this->title = '角色:'. $role->name.' 子角色管理';
-$this->params['breadcrumbs'][] = ['label' => '角色列表', 'url' => ['index']];
+$this->title = '权限:'. $permission->name.' 子权限管理';
+$this->params['breadcrumbs'][] = ['label' => '权限列表', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $itemsArr = \yii\helpers\ArrayHelper::getColumn($subItems,'name');
@@ -22,19 +22,19 @@ $itemsArr = \yii\helpers\ArrayHelper::getColumn($subItems,'name');
             [
                 'class' => 'yii\grid\CheckboxColumn',
                 'multiple'=>false,
-                'header' => '设为子角色',
-                'checkboxOptions' => function ($model, $key, $index, $column) use ($role, $itemsArr) {
+                'header' => '设为子权限',
+                'checkboxOptions' => function ($model, $key, $index, $column) use ($permission, $itemsArr) {
                     $am = \Yii::$app->getAuthManager();
                     return [
                         'value' => $model->name,
-                        'disabled' => ($model->name == $role->name) || $am->hasChild($model, $role),
+                        'disabled' => ($model->name == $permission->name) || $am->hasChild($model, $permission),
                         'checked' => in_array($model->name, $itemsArr),
                     ];
                 }
             ],
             [
                 'attribute'=>'name',
-                'header'=>'角色',
+                'header'=>'权限',
             ],
             [
                 'attribute' => 'description',
@@ -53,7 +53,7 @@ $this->registerJs('
         showMask();
         if(this.checked) {
             $.ajax({
-                url:"'.\yii\helpers\Url::to(['setsub','name'=>$role->name]).'",
+                url:"'.\yii\helpers\Url::to(['setsub','name'=>$permission->name]).'",
                 type:"post",
                 data:{act:"add",val:this.value},
                 success:function(data) {
@@ -65,7 +65,7 @@ $this->registerJs('
         }
         if(!this.checked) {
             $.ajax({
-                url:"'.\yii\helpers\Url::to(['setsub','name'=>$role->name]).'",
+                url:"'.\yii\helpers\Url::to(['setsub','name'=>$permission->name]).'",
                 type:"post",
                 data:{act:"del",val:this.value},
                 success:function(data) {

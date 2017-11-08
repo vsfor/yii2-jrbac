@@ -1,8 +1,7 @@
 <?php
-
 namespace jext\jrbac\controllers;
  
-use jext\jrbac\vendor\RoleForm;
+use jext\jrbac\src\RoleForm;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 
@@ -155,6 +154,7 @@ class RoleController extends ControllerJrbac
         $role = $auth->getRole($id);
         $allItems = $auth->getPermissions();
         $roleItems = $auth->getPermissionsByRole($id);
+        $ownItems = $auth->getChildren($id);
 //        var_dump($roleItems);exit();
         $dataProvider = new ArrayDataProvider();
         $dataProvider->setModels($allItems);
@@ -162,6 +162,7 @@ class RoleController extends ControllerJrbac
             'dataProvider' => $dataProvider,
             'allItems' => $allItems,
             'roleItems' => $roleItems,
+            'ownItems' => $ownItems,
             'role' => $role
         ]);
     }

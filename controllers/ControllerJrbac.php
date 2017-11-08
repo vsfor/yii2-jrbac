@@ -1,5 +1,4 @@
 <?php
-
 namespace jext\jrbac\controllers;
 
 use yii\web\Controller;

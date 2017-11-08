@@ -1,8 +1,7 @@
 <?php
+namespace jext\jrbac\src;
 
-namespace jext\jrbac\models;
-
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%jrbac_menu}}".
@@ -12,17 +11,21 @@ use Yii;
  * @property string $label
  * @property string $icon
  * @property string $url
- * @property integer $sortorder
+ * @property integer $sort_order
  * @property string $content
  * @property integer $status
  */
-class JrbacMenu extends \yii\db\ActiveRecord
+class JrbacMenu extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
+        $am = \Yii::$app->getAuthManager();
+        if ($am instanceof JDbManager) {
+            return $am->menuTable;
+        }
         return '{{%jrbac_menu}}';
     }
 
@@ -32,7 +35,7 @@ class JrbacMenu extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pid', 'sortorder', 'status'], 'integer'],
+            [['pid', 'sort_order', 'status'], 'integer'],
             [['label','icon'], 'string', 'max' => 32],
             [['url', 'content'], 'string', 'max' => 255],
         ];
@@ -49,7 +52,7 @@ class JrbacMenu extends \yii\db\ActiveRecord
             'label' => '名称',
             'icon' => '图标',
             'url' => '链接',
-            'sortorder' => '排序',
+            'sort_order' => '排序',
             'content' => '描述',
             'status' => '状态',
         ];

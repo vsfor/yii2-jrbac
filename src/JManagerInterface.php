@@ -1,5 +1,5 @@
 <?php
-namespace jext\jrbac\vendor;
+namespace jext\jrbac\src;
 
 use yii\rbac\ManagerInterface;
 

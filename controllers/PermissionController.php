@@ -1,9 +1,8 @@
 <?php
-
 namespace jext\jrbac\controllers;
 
-use jext\jrbac\vendor\JAction;
-use jext\jrbac\vendor\PermissionForm;
+use jext\jrbac\src\JAction;
+use jext\jrbac\src\PermissionForm;
 use yii\base\Module;
 use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
@@ -52,21 +51,6 @@ class PermissionController extends ControllerJrbac
                 $item->ruleName = trim($model->ruleName) ? : NULL;
 
                 if($auth->add($item)) {
-                    $item = $auth->getPermission($item->name);
-
-                    $parentNames = trim($model->parentPermission);
-                    $parentNames = str_replace('丨','|',$parentNames);
-                    if ($parentNames) {
-                        $parentArray = explode('|', $parentNames);
-                        foreach ($parentArray as $parentName) {
-                            $parentName = trim($parentName);
-                            $parentItem = $auth->getPermission($parentName);
-                            if ($parentItem && $auth->canAddChild($item, $parentItem)) {
-                                $auth->addChild($item, $parentItem);
-                            }
-                        }
-                    }
-
                     return $this->redirect(['index']);
                 }
             }
@@ -79,7 +63,7 @@ class PermissionController extends ControllerJrbac
     }
 
     /** 删除权限资源 */
-    public function actionDelete($id = '')
+    public function actionDelete($id)
     {
         $name = $id;
         if (\Yii::$app->getRequest()->getIsPost()) {
@@ -119,35 +103,12 @@ class PermissionController extends ControllerJrbac
             $item->ruleName = trim($model->ruleName)? : NULL;
 
             if($auth->update($name,$item)) {
-                $item = $auth->getPermission($item->name);
-
-                $parentNames = trim($model->parentPermission);
-                $parentNames = str_replace('丨','|',$parentNames);
-                $parentNames = str_replace(' ','',$parentNames);
-                if ($parentNames) {
-                    $parentArray = explode('|', $parentNames);
-                    //首先将现有多余的从属关系解除
-                    $existArray = $auth->getChildren($item->name);
-                    foreach ($existArray as $existItem) {
-                        if (!in_array($existItem->name, $parentArray)) {
-                            $auth->removeChild($item, $existItem);
-                        }
-                    }
-                    foreach ($parentArray as $parentName) {
-                        $parentItem = $auth->getPermission($parentName);
-                        if ($parentItem && !in_array($parentItem, $existArray) && $auth->canAddChild($item, $parentItem)) {
-                            $auth->addChild($item, $parentItem);
-                        }
-                    }
-                }
-
                 return $this->redirect(['index']);
             }
         }
         $model->name = $name;
         $model->description = $item->description;
         $model->ruleName = $item->ruleName;
-        $model->parentPermission = implode('|', ArrayHelper::getColumn($auth->getChildren($name),'name'));
 
         $rules = ArrayHelper::getColumn($auth->getRules(),"name");
 
@@ -163,12 +124,54 @@ class PermissionController extends ControllerJrbac
         $name = $id;
         $auth = \Yii::$app->getAuthManager();
         $item = $auth->getPermission($name);
-        $parentItems = $auth->getChildren($name);
+        $subItems = $auth->getChildren($name);
         return $this->render('view',[
             'item' => $item,
-            'parentItems' => $parentItems
+            'subItems' => $subItems
         ]);
     }
+
+    /** 子权限列表 */
+    public function actionSubindex($id)
+    {
+        $auth = \Yii::$app->getAuthManager();
+        $permission = $auth->getPermission($id);
+        $allItems = $auth->getPermissions();
+        $subItems = $auth->getChildren($id);
+        $dataProvider = new ArrayDataProvider();
+        $dataProvider->setModels($allItems);
+        return $this->render('subindex',[
+            'dataProvider' => $dataProvider,
+            'allItems' => $allItems,
+            'subItems' => $subItems,
+            'permission' => $permission
+        ]);
+    }
+
+    /** 子权限关联设置 */
+    public function actionSetsub($name)
+    {
+        if (\Yii::$app->getRequest()->getIsPost() && isset($_POST['act'],$_POST['val'])) {
+            $auth = \Yii::$app->getAuthManager();
+            $permission = $auth->getPermission($name);
+            $sub = $auth->getPermission($_POST['val']);
+            try {
+                $flag = true;
+                if($_POST['act'] == 'add') {
+                    if(!$auth->addChild($permission, $sub)) $flag = false;
+                } else if($_POST['act'] == 'del') {
+                    if(!$auth->removeChild($permission, $sub)) $flag = false;
+                } else {
+                    $flag = false;
+                }
+                return $flag ? 1 : 0;
+            } catch(\Exception $e) {
+                return 0;
+            }
+        }
+        return $this->redirect(['index']);
+    }
+
 
     /** 自动扫描并初始化权限资源列表 */
     public function actionInit()
@@ -181,7 +184,7 @@ class PermissionController extends ControllerJrbac
 
             //默认模块控制器权限列表 -- Start
             $moduleControllerList = [];
-            $f_list = scandir(\Yii::$app->controllerPath);
+            $f_list = scandir(\Yii::$app->getControllerPath());
             foreach ($f_list as $f_item) {
                 if (StringHelper::endsWith($f_item, 'Controller.php')) {
                     $fClassName = explode('.php', $f_item)[0];
@@ -207,7 +210,7 @@ class PermissionController extends ControllerJrbac
                 }
                 unset($module->module);
                 $moduleControllerList = [];
-                $f_list = scandir($module->controllerPath);
+                $f_list = scandir($module->getControllerPath());
                 foreach ($f_list as $f_item) {
                     if (StringHelper::endsWith($f_item, 'Controller.php')) {
                         $fClassName = explode('.php', $f_item)[0];

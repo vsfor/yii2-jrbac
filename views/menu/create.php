@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model \jext\jrbac\models\JrbacMenu */
+/* @var $model \jext\jrbac\src\JrbacMenu */
 
 $this->title = '添加菜单';
 $this->params['breadcrumbs'][] = ['label' => '菜单列表', 'url' => ['index']];

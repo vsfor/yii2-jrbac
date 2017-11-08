@@ -3,6 +3,9 @@
  * @var $this yii\web\View
  * @var $role yii\rbac\Role
  */
+
+use jext\jrbac\src\RuleActionColumn;
+
 $this->title = '规则列表管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -18,7 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn','multiple'=>true],
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'options' => ['class' => 'hidden-xs',],
+                'headerOptions' => ['class' => 'hidden-xs',],
+                'filterOptions' => ['class' => 'hidden-xs',],
+                'contentOptions' => ['class' => 'hidden-xs',],
+            ],
             [
                 'attribute'=>'name',
                 'header'=>'规则唯一标识',
@@ -27,35 +36,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'className',
                 'header'=>'规则类名',
                 'value' => function($model) {
-                    return $model::className();
-                }
+                    return get_class($model);
+                },
+                'options' => ['class' => 'hidden-xs',],
+                'headerOptions' => ['class' => 'hidden-xs',],
+                'filterOptions' => ['class' => 'hidden-xs',],
+                'contentOptions' => ['class' => 'hidden-xs',],
             ],
-//            [
-//                'attribute' => 'createdAt',
-//                'header' => '创建时间',
-//                'value' => function($model) {
-//                    return date("Y-m-d H:i",$model->createdAt);
-//                }
-//            ],
-//            [
-//                'attribute' => 'updatedAt',
-//                'header' => '更新时间',
-//                'value' => function($model) {
-//                    return date("Y-m-d H:i",$model->updatedAt);
-//                }
-//            ],
-
             [
                 'header' => '操作',
-                'class' => 'jext\jrbac\vendor\RuleActionColumn',
-//                'template' => '{view} {update} {delete}'
+                'class' => RuleActionColumn::class,
             ],
         ],
     ]); ?>
 
 </div>
 <?php
-$this->registerJs('$(function(){
+$this->registerJs('
     $("#batchDelete").click(function(){
         showMask();
         var delNames = [];
@@ -79,5 +76,5 @@ $this->registerJs('$(function(){
         hideMask();
         return false;
     });
-});');
+');
 ?>

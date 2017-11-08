@@ -1,8 +1,5 @@
 <?php
-namespace jext\jrbac\vendor;
-
-use jext\jrbac\models\JrbacMenu as Menu;
-use yii\helpers\StringHelper;
+namespace jext\jrbac\src;
 
 class JMenu
 {
@@ -38,9 +35,9 @@ class JMenu
 
     public function getItems($pid = 0)
     {
-        $query = Menu::find()->where('`status`=1 and `pid`=:pid',[
+        $query = JrbacMenu::find()->where('`status`=1 and `pid`=:pid',[
             ':pid'=>$pid
-        ])->orderBy('`sortorder` asc');
+        ])->orderBy('`sort_order` asc');
         $items = $query->asArray()->all();
         $list = [];
         foreach($items as $k=>$item) {
@@ -71,9 +68,9 @@ class JMenu
 
     public function getOptionList($pid = 0,$level = 0,$depth=0)
     {
-        $query = Menu::find()->where('`status`=1 and `pid`=:pid',[
+        $query = JrbacMenu::find()->where('`status`=1 and `pid`=:pid',[
             ':pid'=>$pid
-        ])->orderBy('`sortorder` asc');
+        ])->orderBy('`sort_order` asc');
         $items = $query->asArray()->all();
         $list = [];
         $subPrefix = '';

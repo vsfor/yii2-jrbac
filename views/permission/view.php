@@ -18,9 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <p>基础信息</p>
     <?php
-    $parentItemsDes = '';
-    foreach ($parentItems as $parentItem) {
-        $parentItemsDes .= $parentItem->name.':'.$parentItem->description . '<br/>';
+    $subItemsDes = '';
+    foreach ($subItems as $subItem) {
+        $subItemsDes .= $subItem->name.':'.$subItem->description . '<br/>';
     }
     echo \yii\widgets\DetailView::widget([
         'model' => $item,
@@ -34,9 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '描述',
             ],
             [
-                'label' => '父级资源',
+                'label' => '关联子资源',
                 'format' => 'raw',
-                'value' => $parentItemsDes,
+                'value' => $subItemsDes,
             ],
             [
                 'attribute' => 'createdAt',

@@ -1,8 +1,10 @@
 <?php
-namespace jext\jrbac\vendor;
+namespace jext\jrbac\src;
+
+use yii\grid\ActionColumn;
 use yii\helpers\Html;
 
-class RoleActionColumn extends \yii\grid\ActionColumn
+class RoleActionColumn extends ActionColumn
 {
     public $template = '{view} {update} {delete} {userindex} {permissionindex} {subindex}';
 

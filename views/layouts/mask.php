@@ -1,7 +1,8 @@
 <?php
 /** @var $this \yii\web\View */
+use jext\jrbac\JrbacAsset;
 
-$asset = jext\jrbac\JrbacAsset::register($this);
+$asset = JrbacAsset::register($this);
 
 if (!function_exists('j_view_show_mask')) {
     function j_view_show_mask() { }

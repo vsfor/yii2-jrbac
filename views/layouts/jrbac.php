@@ -3,11 +3,11 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use jext\jrbac\JrbacAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use jext\jrbac\JrbacAsset;
 
 JrbacAsset::register($this);
 ?>
@@ -27,7 +27,7 @@ JrbacAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Yii2 RBAC',
+        'brandLabel' => 'Yii2 JRBAC',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,7 +36,7 @@ JrbacAsset::register($this);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
     ];
-    if (Yii::$app->user->isGuest) {
+    if (Yii::$app->getUser()->getIsGuest()) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = ['label' => 'RBAC', 'url' => ['/jrbac/user/index'], 'items' => [
@@ -70,9 +70,9 @@ if (!function_exists('j_view_show_mask')) {
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Jeen Wang <?= date('Y') ?></p>
+        <p class="pull-left">Jeen &copy; <?= date('Y') ?> All Rights Reserved.</p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right"><?= \Yii::powered() ?></p>
     </div>
 </footer>
 

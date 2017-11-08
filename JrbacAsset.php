@@ -2,19 +2,44 @@
 namespace jext\jrbac;
 
 use yii\web\AssetBundle;
+use yii\web\View;
+use yii\web\YiiAsset;
 
+/**
+ * Just for jquery.toastmessage plugin
+ * Usages:
+ * $().toastmessage('showNoticeToast', 'some message here');
+ * $().toastmessage('showSuccessToast', "some message here");
+ * $().toastmessage('showWarningToast', "some message here");
+ * $().toastmessage('showErrorToast', "some message here");
+ *
+ * $().toastmessage('showToast', {
+ *      text     : 'Hello World',
+ *      sticky   : true,
+ *      position : 'top-right',
+ *      type     : 'success',
+ *      close    : function () {console.log("toast is closed ...");}
+ * });
+ *
+ * Class JrbacAsset
+ * @package common\module\jrbac\asset
+ */
 class JrbacAsset extends AssetBundle
 {
-    public $sourcePath = '@vendor/jext/yii2-jrbac/assets';
+    public $sourcePath = '@vendor/jext/yii2-jrbac/asset';
+
     public $css = [
-        'main.css',
-        'toastmessage/resources/css/jquery.toastmessage.css',
+        'css/jquery.toastmessage.css',
     ];
     public $js = [
-        'toastmessage/javascript/jquery.toastmessage.js',
+        'js/jquery.toastmessage.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        YiiAsset::class,
     ];
+
+    public $jsOptions = [
+        'position' => View::POS_HEAD,
+    ];
+
 }

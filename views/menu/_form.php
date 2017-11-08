@@ -2,19 +2,20 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use jext\jrbac\src\JMenu;
 
 /* @var $this yii\web\View */
-/* @var $model \jext\jrbac\models\JrbacMenu */
+/* @var $model \jext\jrbac\src\JrbacMenu */
 /* @var $form yii\widgets\ActiveForm */
 
 if(is_null($model->status)) $model->status = 1;
-if(is_null($model->sortorder)) $model->sortorder = 0;
-$pMenuItems = \jext\jrbac\vendor\JMenu::getInstance()->getOptionList(0,0,1);
+if(is_null($model->sort_order)) $model->sort_order = 0;
+$pMenuItems = JMenu::getInstance()->getOptionList(0,0,1);
 $pMenuList = ['0'=>'顶级菜单'];
 foreach($pMenuItems as $item) {
     if($item['id'] != $model->id) $pMenuList[$item['id']] = $item['label'];
 }
-$menuLib = \jext\jrbac\vendor\JMenu::getInstance();
+$menuLib = JMenu::getInstance();
 $iconArray = $menuLib->getMenuIconOptionItems();
 if (!$model->icon) {
     $model->icon = $menuLib->defaultIcon;
@@ -35,7 +36,7 @@ if (!$model->icon) {
 
     <?php echo $form->field($model, 'url')->textInput(['maxlength' => 255]); ?>
 
-    <?php echo $form->field($model, 'sortorder')->textInput(['type'=>'number']); ?>
+    <?php echo $form->field($model, 'sort_order')->textInput(['type'=>'number']); ?>
 
     <?php echo $form->field($model, 'content')->textarea(['maxlength' => 255]); ?>
 
