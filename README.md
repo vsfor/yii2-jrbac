@@ -8,7 +8,7 @@
         'components' => [
             //...
             'authManager' => [
-                'class' => 'jext\jrbac\vendor\JDbManager',
+                'class' => 'jext\jrbac\src\JDbManager',
             ],
         ]
         //...
@@ -32,7 +32,7 @@
 $menuItems = [
     //... your own menu items set
 ];
-$jrbacMenu = \jext\jrbac\vendor\JMenu::getInstance()->getMenu();
+$jrbacMenu = \jext\jrbac\src\JMenu::getInstance()->getMenu();
 
 //in adminLte theme template
 echo dmstr\widgets\Menu::widget(
@@ -57,6 +57,8 @@ echo dmstr\widgets\Menu::widget(
     ]);
 
     NavBar::end();
+    
+//to use this component, make sure you have assigned the right permissions to the logined user
    
 ```   
 

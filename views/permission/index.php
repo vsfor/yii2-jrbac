@@ -69,6 +69,8 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?php
+$req = \Yii::$app->getRequest();
+
 $this->registerJs('$(function(){
     $("#batchDelete").click(function(){
         showMask();
@@ -79,14 +81,22 @@ $this->registerJs('$(function(){
             }
         });
         if(delNames.length !== 0 && confirm("确认删除:"+delNames.toString()+" ?")) {
+            var t_data = {
+                names: delNames,
+                '.$req->csrfParam.':"a'.$req->getCsrfToken().'"
+            };
             $.ajax({
                 url:this.href,
                 type:"post",
-                data:{names:delNames},
+                data: t_data,
                 success:function(data) {
                     hideMask();
-                    if(data === "1") window.location.href = window.location.href;
-                    else alert("删除失败，请刷新页面重试");
+                    if (data === "1") {
+                        $().toastmessage("showSuccessToast", "删除成功");
+                        setTimeout("window.location.reload();",1000);
+                    } else {
+                        $().toastmessage("showErrorToast", "失败,请联系管理员");
+                    }
                 }
             });
         }
@@ -107,6 +117,7 @@ $this->registerJs('$(function(){
                         $().toastmessage("showSuccessToast","操作成功");
                         $("#lastInitTime").html(data);    
                         $("#lastInitTime").slideDown();
+                        setTimeout("window.location.reload();",1500);
                     } else {
                         $().toastmessage("showErrorToast","失败,请联系管理员");
                     } 

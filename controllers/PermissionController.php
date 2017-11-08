@@ -41,17 +41,21 @@ class PermissionController extends ControllerJrbac
         $model = new PermissionForm();
         $model->isNewRecord = true;
         if($model->load(\Yii::$app->getRequest()->post())) {
-            $model->name = str_replace(' ','',$model->name);
-            $auth = \Yii::$app->getAuthManager();
-            if($auth->getPermission($model->name)) {
-                $model->addError('name','资源标识已存在');
+            $model->name = trim($model->name);
+            if (!$model->name) {
+                $model->addError('name', '资源标识不可为空');
             } else {
-                $item = $auth->createPermission($model->name);
-                $item->description = trim($model->description);
-                $item->ruleName = trim($model->ruleName) ? : NULL;
+                $auth = \Yii::$app->getAuthManager();
+                if($auth->getPermission($model->name)) {
+                    $model->addError('name','资源标识已存在');
+                } else {
+                    $item = $auth->createPermission($model->name);
+                    $item->description = trim($model->description);
+                    $item->ruleName = trim($model->ruleName) ? : NULL;
 
-                if($auth->add($item)) {
-                    return $this->redirect(['index']);
+                    if($auth->add($item)) {
+                        return $this->redirect(['index']);
+                    }
                 }
             }
         }
@@ -63,7 +67,7 @@ class PermissionController extends ControllerJrbac
     }
 
     /** 删除权限资源 */
-    public function actionDelete($id)
+    public function actionDelete($id='')
     {
         $name = $id;
         if (\Yii::$app->getRequest()->getIsPost()) {
@@ -98,12 +102,17 @@ class PermissionController extends ControllerJrbac
         $item = $auth->getPermission($name);
 
         if($model->load(\Yii::$app->getRequest()->post())) {
-            $item->name = trim($model->name);
-            $item->description = trim($model->description);
-            $item->ruleName = trim($model->ruleName)? : NULL;
+            $model->name = trim($model->name);
+            if (!$model->name) {
+                $model->addError('name', '资源标识不可为空');
+            } else {
+                $item->name = $model->name;
+                $item->description = trim($model->description);
+                $item->ruleName = trim($model->ruleName)? : NULL;
 
-            if($auth->update($name,$item)) {
-                return $this->redirect(['index']);
+                if($auth->update($name,$item)) {
+                    return $this->redirect(['index']);
+                }
             }
         }
         $model->name = $name;

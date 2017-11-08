@@ -4,6 +4,7 @@ namespace jext\jrbac;
 use yii\web\AssetBundle;
 use yii\web\View;
 use yii\web\YiiAsset;
+use yii\bootstrap\BootstrapAsset;
 
 /**
  * Just for jquery.toastmessage plugin
@@ -36,6 +37,7 @@ class JrbacAsset extends AssetBundle
     ];
     public $depends = [
         YiiAsset::class,
+        BootstrapAsset::class,
     ];
 
     public $jsOptions = [
