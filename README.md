@@ -1,6 +1,13 @@
 # yii2-jrbac
-### backend actions for yii2 rbac manage
+### module for yii2 rbac manage
 ### improving... you can diy it for your own project
+
+**Yii2 RBAC管理模块**
+
+- 权限管理 - 添加、删除（批量）、自动初始化（根据路由地址）
+- 角色管理 - 添加、删除（批量）、用户关联、权限关联、子角色关联
+- 规则管理 - 添加、删除（批量）、权限关联
+- 菜单管理 - 增删改查、无限分类、图标集成、权限过滤、与模版无缝集成（默认+adminLte）
 
 - set the authManager component in your project config file
 

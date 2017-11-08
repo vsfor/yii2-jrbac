@@ -1,6 +1,6 @@
 {
   "name": "jext/yii2-jrbac",
-  "description": "JRBAC - Yii2 RBAC admin control panel and dashboard that's based on Bootstrap 3",
+  "description": "JRBAC - Yii2 RBAC admin control panel and dashboard that's based on Bootstrap",
   "homepage": "http://blog.jeen.wang/",
   "keywords": ["yii2", "admin", "rbac", "extension", "module"],
   "authors": [
